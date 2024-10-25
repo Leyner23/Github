@@ -54,15 +54,17 @@ esta es una formula cualquiera $$k=\frac{\left(2x-1\right)^2-1}{4}"$$
 1. Hacer push al repositorio
 1. Activar GitHub Pages
 
+
+
+
 #Modelo lineal 
 ## IMportar data 
 ```{r}
 library(readxl)
-dat
-View(dat)
-View(dat)
+dat <- read_excel("C:/Users/PC/OneDrive/Desktop/dat.xlsx")
 View(dat)
 ```
+
 # Modelo lineal
 ```{r}
 modelo <- lm(formula = lfa ~ bloque + geno + riego +riego*geno , data = dat)
@@ -70,11 +72,70 @@ modelo <- lm(formula = lfa ~ bloque + geno + riego +riego*geno , data = dat)
 anova(modelo)
 
 ```
+
+
 ## box plot
 ```{r}
+library(ggplot2)
 ggplot(dat, aes(x = interaction(geno, riego), y = lfa, fill = riego)) + 
   geom_boxplot() +
-  labs(x = "Genotipo y Riego", y = "LFA", title = "Boxplot de LFA por Genotipo y Tratamiento de Riego") +
+  labs(x = "Genotipo", y = "LFA", title = "Boxplot de LFA por Genotipo y Riego") +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
+
+## comparacion de medias con agicolae
+
+```{r}
+library(agricolae)
+library(dplyr)
+library(tibble)
+library(tidyr)
+# test de Tukey para el factor geno
+tukey_geno <- HSD.test(modelo, "geno", group = TRUE, console = TRUE)
+
+# test de Tukey para el riego
+tukey_riego <- HSD.test(modelo, "riego", group = TRUE, console = TRUE)
+
+# test de tukey para la interaccion geno:riego
+tukey_interaccion <- HSD.test(modelo, c("riego", "geno"), group = TRUE, console = TRUE)
+print(tukey_interaccion)
+
+str(tukey_interaccion)
+
+tukey_interaccion$groups
+
+mc <- tukey_interaccion$groups %>% 
+  rownames_to_column("trat") %>% 
+  separate(trat, c("riego", "variedad"))
+
+
+str(mc)
+
+```
+
+### grafico en ggplot2
+```{r}
+ggplot(mc, aes(x = variedad, y = lfa, fill = riego)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_text(aes(label = groups), position = position_dodge(width = 1), vjust = -0.1) +
+  labs(title = "Producción por Variedad y Riego", 
+       x = "Variedad", 
+       y = "LFA") +
+  theme_minimal()
+
+
+
+```
+
+```{r}
+library(agricolae)
+library(dplyr)
+library(tidyr)
+library(tibble)
+library(ggplot2)
+```
+
+
+
+
 
