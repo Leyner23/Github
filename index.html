@@ -122,11 +122,9 @@ window.Quarto = {
   <li><a href="#modelo-lineal" id="toc-modelo-lineal" class="nav-link" data-scroll-target="#modelo-lineal"><span class="header-section-number">4</span> Modelo lineal</a>
   <ul class="collapse">
   <li><a href="#box-plot" id="toc-box-plot" class="nav-link" data-scroll-target="#box-plot"><span class="header-section-number">4.1</span> box plot</a></li>
-  <li><a href="#comparacion-de-medias-con-agicolae" id="toc-comparacion-de-medias-con-agicolae" class="nav-link" data-scroll-target="#comparacion-de-medias-con-agicolae"><span class="header-section-number">4.2</span> comparacion de medias con agicolae</a>
-  <ul class="collapse">
-  <li><a href="#grafico-en-ggplot2" id="toc-grafico-en-ggplot2" class="nav-link" data-scroll-target="#grafico-en-ggplot2"><span class="header-section-number">4.2.1</span> grafico en ggplot2</a></li>
+  <li><a href="#comparacion-de-medias-con-agicolae" id="toc-comparacion-de-medias-con-agicolae" class="nav-link" data-scroll-target="#comparacion-de-medias-con-agicolae"><span class="header-section-number">4.2</span> comparacion de medias con agicolae</a></li>
   </ul></li>
-  </ul></li>
+  <li><a href="#comparación-de-medias-emmeans" id="toc-comparación-de-medias-emmeans" class="nav-link" data-scroll-target="#comparación-de-medias-emmeans"><span class="header-section-number">5</span> Comparación de medias: emmeans</a></li>
   </ul>
 </nav>
 </div>
@@ -677,8 +675,6 @@ sequia:G07     680.734      k</code></pre>
  $ groups  : chr  "a" "ab" "abc" "abc" ...</code></pre>
 </div>
 </div>
-<section id="grafico-en-ggplot2" class="level3" data-number="4.2.1">
-<h3 data-number="4.2.1" class="anchored" data-anchor-id="grafico-en-ggplot2"><span class="header-section-number">4.2.1</span> grafico en ggplot2</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mc, <span class="fu">aes</span>(<span class="at">x =</span> variedad, <span class="at">y =</span> lfa, <span class="at">fill =</span> riego)) <span class="sc">+</span></span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">position =</span> <span class="fu">position_dodge</span>()) <span class="sc">+</span></span>
@@ -695,15 +691,108 @@ sequia:G07     680.734      k</code></pre>
 </div>
 </div>
 </div>
+</section>
+</section>
+<section id="comparación-de-medias-emmeans" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Comparación de medias: emmeans</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(agricolae)</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(emmeans)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'emmeans' was built under R version 4.4.1</code></pre>
 </div>
-</section>
-</section>
+<div class="cell-output cell-output-stderr">
+<pre><code>Welcome to emmeans.
+Caution: You lose important information if you filter this package's results.
+See '? untidy'</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>mc <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(modelo, <span class="sc">~</span> riego <span class="sc">*</span> geno)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>mc <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(modelo, <span class="sc">~</span> riego <span class="sc">|</span> geno)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>mc <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(modelo, <span class="sc">~</span> riego <span class="sc">|</span> geno) <span class="sc">%&gt;%</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>()</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>mc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>geno = G01:
+ riego       emmean      SE  df lower.CL  upper.CL
+ irrigado  7377.892 331.656 116 6721.005  8034.779
+ sequia    3039.588 331.656 116 2382.701  3696.475
+
+geno = G02:
+ riego       emmean      SE  df lower.CL  upper.CL
+ irrigado  5779.562 331.656 116 5122.675  6436.449
+ sequia    2717.050 331.656 116 2060.163  3373.937
+
+geno = G03:
+ riego       emmean      SE  df lower.CL  upper.CL
+ irrigado  5416.770 331.656 116 4759.883  6073.657
+ sequia    2059.052 331.656 116 1402.165  2715.939
+
+geno = G04:
+ riego       emmean      SE  df lower.CL  upper.CL
+ irrigado  9668.932 331.656 116 9012.045 10325.819
+ sequia    2978.712 331.656 116 2321.825  3635.599
+
+geno = G05:
+ riego       emmean      SE  df lower.CL  upper.CL
+ irrigado  8878.756 331.656 116 8221.869  9535.643
+ sequia    1783.678 331.656 116 1126.791  2440.565
+
+geno = G06:
+ riego       emmean      SE  df lower.CL  upper.CL
+ irrigado  7455.364 331.656 116 6798.477  8112.251
+ sequia    3348.074 331.656 116 2691.187  4004.961
+
+geno = G07:
+ riego       emmean      SE  df lower.CL  upper.CL
+ irrigado  1374.156 331.656 116  717.269  2031.043
+ sequia     680.734 331.656 116   23.847  1337.621
+
+geno = G08:
+ riego       emmean      SE  df lower.CL  upper.CL
+ irrigado  7286.826 331.656 116 6629.939  7943.713
+ sequia    2373.624 331.656 116 1716.737  3030.511
+
+geno = G09:
+ riego       emmean      SE  df lower.CL  upper.CL
+ irrigado 10287.712 331.656 116 9630.825 10944.599
+ sequia    3073.322 331.656 116 2416.435  3730.209
+
+geno = G10:
+ riego       emmean      SE  df lower.CL  upper.CL
+ irrigado  5271.344 331.656 116 4614.457  5928.231
+ sequia    2924.648 331.656 116 2267.761  3581.535
+
+geno = G11:
+ riego       emmean      SE  df lower.CL  upper.CL
+ irrigado  6854.880 331.656 116 6197.993  7511.767
+ sequia    2062.412 331.656 116 1405.525  2719.299
+
+geno = G12:
+ riego       emmean      SE  df lower.CL  upper.CL
+ irrigado  7417.258 331.656 116 6760.371  8074.145
+ sequia    2446.404 331.656 116 1789.517  3103.291
+
+geno = G13:
+ riego       emmean      SE  df lower.CL  upper.CL
+ irrigado  8672.380 331.656 116 8015.493  9329.267
+ sequia    3126.100 331.656 116 2469.213  3782.987
+
+geno = G14:
+ riego       emmean      SE  df lower.CL  upper.CL
+ irrigado  8384.132 331.656 116 7727.245  9041.019
+ sequia    3514.338 331.656 116 2857.451  4171.225
+
+geno = G15:
+ riego       emmean      SE  df lower.CL  upper.CL
+ irrigado  6367.026 331.656 116 5710.139  7023.913
+ sequia    1580.506 331.656 116  923.619  2237.393
+
+Results are averaged over the levels of: bloque 
+Confidence level used: 0.95 </code></pre>
+</div>
+</div>
+<p>```</p>
 </section>
 
 </main>

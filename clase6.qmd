@@ -113,7 +113,7 @@ str(mc)
 
 ```
 
-### grafico en ggplot2
+
 ```{r}
 ggplot(mc, aes(x = variedad, y = lfa, fill = riego)) +
   geom_bar(stat = "identity", position = position_dodge()) +
@@ -127,14 +127,22 @@ ggplot(mc, aes(x = variedad, y = lfa, fill = riego)) +
 
 ```
 
+# Comparación de medias: emmeans 
+
 ```{r}
-library(agricolae)
-library(dplyr)
-library(tidyr)
-library(tibble)
-library(ggplot2)
+library(emmeans)
+mc <- emmeans(modelo, ~ riego * geno)
+mc <- emmeans(modelo, ~ riego | geno)
+
+mc <- emmeans(modelo, ~ riego | geno) %>%
+  as.data.frame()
+
+mc
+
 ```
 
+
+```
 
 
 
