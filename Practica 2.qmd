@@ -1,0 +1,189 @@
+---
+title: "Pagina Web_G2"
+author: "Lopez, Mego, Puerta, Rodriguez, Tucto, Vela"
+format: 
+  html:
+    toc: true
+    toc-location: left
+    number-sections: true
+    embed_resources: true
+    output-file: index 
+editor_options: 
+  chunk_output_type: console
+---
+# INTRODUCCIÓN
+La papa es uno de los cultivos más importantes del mundo y un pilar económico para más de 600 mil pequeños agricultores en el Perú, que es uno de los principales productores de este tubérculo en Latinoamérica. Sin embargo, el cambio climático está generando nuevos desafíos en su producción, ya que cada vez se cuenta con menos recursos hídricos para satisfacer la demanda alimentaria de una población en constante crecimiento. Además, la papa es particularmente sensible a la falta de agua, lo cual afecta tanto su rendimiento como la calidad de sus tubérculos el presente estudio busca identificar genotipos de papa que puedan adaptarse mejor a condiciones de sequía, sin perder su capacidad de producir de manera eficiente.
+
+# DESARROLLO
+## Materiales y metodos
+Material biológico: Se utilizaron quince (15) genotipos de papa provenientes de poblaciones de mejoramiento del Centro Internacional de la Papa
+
+
+## Modelo lineal para el Peso seco del tubérculo
+### Importar data 
+
+```{r}
+library(readxl)
+dat <- read_excel("C:/Users/PC/OneDrive/Desktop/dat.xlsx")
+View(dat)
+```
+
+### Modelo lineal
+```{r}
+modelo <- lm(formula = tubdw ~ bloque + geno + riego +riego*geno , data = dat)
+
+anova(modelo)
+
+```
+
+### box plot
+```{r}
+library(ggplot2)
+ggplot(dat, aes(x = interaction(geno, riego), y = tubdw, fill = riego)) + 
+  geom_boxplot() +
+  labs(x = "Genotipo", y = "tubdw", title = "Boxplot de tubdw por Genotipo y Riego") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+```
+
+### comparacion de medias con agicolae
+```{r}
+library(agricolae)
+modelo <- lm(tubdw ~ bloque + geno + riego + riego * geno, data = dat)
+anova_result <- anova(modelo)
+ tukey_result <- HSD.test(modelo, "bloque", group = TRUE)
+ print(tukey_result)
+
+```
+
+### Grafico en ggplot
+```{r}
+ggplot(dat, aes(x = geno, y = tubdw, fill = riego)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_text(aes(label = bloque), position = position_dodge(0.1), vjust = -0.5) +
+  labs(x = "geno", y = "tubdw", fill = "Riego") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45,hjust = 1))
+```
+
+
+###  Comparación de medias: emmeans 
+```{r}
+library(emmeans)
+modelo <- lm(tubdw ~ bloque + geno + riego + riego * geno, data = dat)
+emmeans_result <- emmeans(modelo, ~ bloque)
+comparaciones <- pairs(emmeans_result)
+print(comparaciones)
+
+```
+
+
+
+```{r}
+library(emmeans)
+library(ggplot2)
+modelo <- lm(tubdw ~ bloque + geno + riego + riego * geno, data = dat)
+emmeans_result <- emmeans(modelo, ~ bloque)
+emmeans_df <- as.data.frame(emmeans_result)
+ggplot(emmeans_df, aes(x = bloque, y = emmean)) +
+  geom_point(size = 3, color = "red") +
+  geom_errorbar(aes(ymin = emmean - SE, ymax = emmean + SE), width = 0.2) +
+  labs(x = "Bloque", y = "Media Marginal Estimada") +
+  theme_minimal() +
+  ggtitle("Medias Marginales Estimadas para cada Bloque")
+
+```
+
+## Modelo lineal para la eficiencia en el uso del agua de los tubérculos (g/l)
+
+### Modelo lineal
+```{r}
+modelo <- lm(formula = twue ~ bloque + geno + riego +riego*geno , data = dat)
+
+anova(modelo)
+
+```
+
+### box plot
+```{r}
+library(ggplot2)
+ggplot(dat, aes(x = interaction(geno, riego), y = twue, fill = riego)) + 
+  geom_boxplot() +
+  labs(x = "Genotipo", y = "twue", title = "Boxplot de twue por Genotipo y Riego") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+```
+
+### comparacion de medias con agicolae
+```{r}
+library(agricolae)
+modelo <- lm(twue ~ bloque + geno + riego + riego * geno, data = dat)
+anova_result <- anova(modelo)
+ tukey_result <- HSD.test(modelo, "bloque", group = TRUE)
+ print(tukey_result)
+
+```
+
+### Grafico en ggplot
+```{r}
+ggplot(dat, aes(x = geno, y = twue, fill = riego)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_text(aes(label = bloque), position = position_dodge(0.1), vjust = -0.5) +
+  labs(x = "geno", y = "twue", fill = "Riego") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45,hjust = 1))
+```
+
+###  Comparación de medias: emmeans 
+```{r}
+library(emmeans)
+modelo <- lm(twue ~ bloque + geno + riego + riego * geno, data = dat)
+emmeans_result <- emmeans(modelo, ~ bloque)
+comparaciones <- pairs(emmeans_result)
+print(comparaciones)
+
+```
+
+```{r}
+library(emmeans)
+library(ggplot2)
+modelo <- lm(twue ~ bloque + geno + riego + riego * geno, data = dat)
+emmeans_result <- emmeans(modelo, ~ bloque)
+emmeans_df <- as.data.frame(emmeans_result)
+ggplot(emmeans_df, aes(x = bloque, y = emmean)) +
+  geom_point(size = 3, color = "red") +
+  geom_errorbar(aes(ymin = emmean - SE, ymax = emmean + SE), width = 0.2) +
+  labs(x = "Bloque", y = "Media Marginal Estimada") +
+  theme_minimal() +
+  ggtitle("Medias Marginales Estimadas para cada Bloque")
+
+```
+
+
+
+
+3 CONCLUSIONES
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
