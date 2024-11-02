@@ -11,16 +11,20 @@ format:
 editor_options: 
   chunk_output_type: console
 ---
+
 # INTRODUCCIÓN
+
 La papa es uno de los cultivos más importantes del mundo y un pilar económico para más de 600 mil pequeños agricultores en el Perú, que es uno de los principales productores de este tubérculo en Latinoamérica. Sin embargo, el cambio climático está generando nuevos desafíos en su producción, ya que cada vez se cuenta con menos recursos hídricos para satisfacer la demanda alimentaria de una población en constante crecimiento. Además, la papa es particularmente sensible a la falta de agua, lo cual afecta tanto su rendimiento como la calidad de sus tubérculos el presente estudio busca identificar genotipos de papa que puedan adaptarse mejor a condiciones de sequía, sin perder su capacidad de producir de manera eficiente.
 
 # DESARROLLO
+
 ## Materiales y metodos
+
 Material biológico: Se utilizaron quince (15) genotipos de papa provenientes de poblaciones de mejoramiento del Centro Internacional de la Papa
 
-
 ## Modelo lineal para el Peso seco del tubérculo
-### Importar data 
+
+### Importar data
 
 ```{r}
 library(readxl)
@@ -29,6 +33,7 @@ View(dat)
 ```
 
 ### Modelo lineal
+
 ```{r}
 modelo <- lm(formula = tubdw ~ bloque + geno + riego +riego*geno , data = dat)
 
@@ -37,6 +42,7 @@ anova(modelo)
 ```
 
 ### box plot
+
 ```{r}
 library(ggplot2)
 ggplot(dat, aes(x = interaction(geno, riego), y = tubdw, fill = riego)) + 
@@ -47,6 +53,7 @@ ggplot(dat, aes(x = interaction(geno, riego), y = tubdw, fill = riego)) +
 ```
 
 ### comparacion de medias con agicolae
+
 ```{r}
 library(agricolae)
 modelo <- lm(tubdw ~ bloque + geno + riego + riego * geno, data = dat)
@@ -57,6 +64,7 @@ anova_result <- anova(modelo)
 ```
 
 ### Grafico en ggplot
+
 ```{r}
 ggplot(dat, aes(x = geno, y = tubdw, fill = riego)) +
   geom_bar(stat = "identity", position = position_dodge()) +
@@ -66,8 +74,8 @@ ggplot(dat, aes(x = geno, y = tubdw, fill = riego)) +
   theme(axis.text.x = element_text(angle = 45,hjust = 1))
 ```
 
+### Comparación de medias: emmeans
 
-###  Comparación de medias: emmeans 
 ```{r}
 library(emmeans)
 modelo <- lm(tubdw ~ bloque + geno + riego + riego * geno, data = dat)
@@ -76,8 +84,6 @@ comparaciones <- pairs(emmeans_result)
 print(comparaciones)
 
 ```
-
-
 
 ```{r}
 library(emmeans)
@@ -97,6 +103,7 @@ ggplot(emmeans_df, aes(x = bloque, y = emmean)) +
 ## Modelo lineal para la eficiencia en el uso del agua de los tubérculos (g/l)
 
 ### Modelo lineal
+
 ```{r}
 modelo <- lm(formula = twue ~ bloque + geno + riego +riego*geno , data = dat)
 
@@ -105,6 +112,7 @@ anova(modelo)
 ```
 
 ### box plot
+
 ```{r}
 library(ggplot2)
 ggplot(dat, aes(x = interaction(geno, riego), y = twue, fill = riego)) + 
@@ -115,6 +123,7 @@ ggplot(dat, aes(x = interaction(geno, riego), y = twue, fill = riego)) +
 ```
 
 ### comparacion de medias con agicolae
+
 ```{r}
 library(agricolae)
 modelo <- lm(twue ~ bloque + geno + riego + riego * geno, data = dat)
@@ -125,6 +134,7 @@ anova_result <- anova(modelo)
 ```
 
 ### Grafico en ggplot
+
 ```{r}
 ggplot(dat, aes(x = geno, y = twue, fill = riego)) +
   geom_bar(stat = "identity", position = position_dodge()) +
@@ -134,7 +144,8 @@ ggplot(dat, aes(x = geno, y = twue, fill = riego)) +
   theme(axis.text.x = element_text(angle = 45,hjust = 1))
 ```
 
-###  Comparación de medias: emmeans 
+### Comparación de medias: emmeans
+
 ```{r}
 library(emmeans)
 modelo <- lm(twue ~ bloque + geno + riego + riego * geno, data = dat)
@@ -159,31 +170,4 @@ ggplot(emmeans_df, aes(x = bloque, y = emmean)) +
 
 ```
 
-
-
-
 3 CONCLUSIONES
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
