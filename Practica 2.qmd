@@ -20,14 +20,43 @@ editor_options:
   chunk_output_type: console 
 ---
 
+# RESUMEN 
+La papa (*Solanum tuberosum* L.) es un cultivo que presenta alta sensibilidad a la sequía, ya que su sistema radicular es poco profundo y requiere una constante disponibilidad de agua en el suelo para alcanzar su máximo rendimiento. La eficiencia de uso de agua (EUA), que se define como la producción generada por cada unidad de agua consumida, resulta fundamental para evaluar el rendimiento en condiciones de estrés hídrico. Comprender la relación entre la EUA y el rendimiento puede facilitar el desarrollo de estrategias que minimicen las pérdidas de producción asociadas a la escasez de agua.
+
+Un experimento realizado en invernadero con 15 genotipos de papa del Centro Internacional de la Papa (CIP) tuvo como objetivo caracterizar esta relación. Se aplicó un diseño experimental que contempló dos tipos de riego: sequía regulada y riego normal, evaluando diversas variables morfológicas y fisiológicas, así como parámetros de rendimiento como el peso de biomasa y el índice de cosecha. Los resultados indicaron diferencias significativas entre los tratamientos. Además, se observó una alta correlación entre la EUA y el índice de cosecha (r = 0.98), lo que sugiere que este índice puede ser útil para seleccionar genotipos tolerantes a la sequía, destacando especialmente a los genotipos CIP398190.89, CIP397077.16, CIP392797.22 y CIP398208.620 por su alta eficiencia en el uso del agua sin una drástica reducción en su rendimiento.
+
 # INTRODUCCIÓN
 
 La papa es uno de los cultivos más importantes del mundo y un pilar económico para más de 600 mil pequeños agricultores en el Perú, que es uno de los principales productores de este tubérculo en Latinoamérica. Sin embargo, el cambio climático está generando nuevos desafíos en su producción, ya que cada vez se cuenta con menos recursos hídricos para satisfacer la demanda alimentaria de una población en constante crecimiento. Además, la papa es particularmente sensible a la falta de agua, lo cual afecta tanto su rendimiento como la calidad de sus tubérculos el presente estudio busca identificar genotipos de papa que puedan adaptarse mejor a condiciones de sequía, sin perder su capacidad de producir de manera eficiente.
+La investigación sobre el uso eficiente del agua es crucial, ya que este recurso se está volviendo cada vez más limitado. Al mismo tiempo, se observa un incremento en las temperaturas de diversos ecosistemas, lo que genera la necesidad de desarrollar plantas que sean tolerantes o resistentes al calor y a la sequía, manteniendo rendimientos aceptables. En particular, la papa es vulnerable al estrés hídrico, lo que puede resultar en una disminución tanto en el rendimiento como en la calidad del tubérculo.
 
-# DESARROLLO
+# MARCO TEÓRICO
+Según MINAG (2014), la papa es el principal cultivo del país en superficie sembrada y representa el 25 % del PBI agropecuario. Además, es la base de la alimentación de la zona andina y es producido por 600 mil pequeñas unidades agrarias. La siembra promedio es de 274,411 hectáreas en 19 regiones del Perú. Puede desarrollarse desde el nivel del mar hasta los 4,200 m.s.n.m.; pero mayormente prospera en climas semitemplados. Alcanza su máximo crecimiento y desarrollo entre 15 a 18 C. La formación de estolones y tubérculos es más exigente y requiere de 8 a 12 C.
 
+El Perú es el país con mayor diversidad de papas en el mundo, al contar con 8 especies nativas domesticadas y 2,301 de las más de 4,000 variedades que existen en Latinoamérica. Además, nuestro país posee 91 de las 200 especies que crecen en forma silvestre en casi todo nuestro continente (y que generalmente no son comestibles) (MINAG, 2014). 
 
-Material biológico: Se utilizaron quince (15) genotipos de papa provenientes de poblaciones de mejoramiento del Centro Internacional de la Papa
+# MATERIALES Y METODOS
+*UBICACIÓN Y CARACTERISTICAS DEL AREA DE ESTUDIO*
+
+El presente trabajo de investigación se desarrolló en el invernadero 10 A del Centro Internacional de la papa. El experimento se llevó acabo en la estación de Invierno (Mayo a Agosto de 2013).Las temperaturas promedio máxima y mínima del invernadero fueron de 24 y 15 e respectivamente. La humedad relativa promedio fue de 80 %. No hubo uso de luz artificial. 
+
+*DESINFECCIÓN DE MATERIALES*
+
+se realizó con 30 g de hipoclorito de calcio en 120 litros de agua. Se sumergieron los materiales para su desinfección (macetas, tutores de bambú y mallas plásticas). Luego se procedió a enjugar y ponerlos a secar.
+
+*PREPARACIÓN DE SUSTRATOS*
+
+Se utilizó una mezcla de sustrato SOGEMIX SM-2 (75% Musgo de turba, perlita, vermiculita, y la piedra caliza) mezclada con tierra de chacra proveniente de la estación experimental de Huancayo (desinfectado), la fertilización se fraccionó en dos, a la siembra y a los 40 DDS.
+
+*SIEMBRA DE TUBÉRCULOS*
+
+Los tubérculos de papa fueron propagados en la estación experimental de Huancayo, donde se les aplicó un tratamiento químico con RTNDJTE para romper la dormancia. Después, se colocaron en una cámara caliente para favorecer el brotamiento de las yemas. Una vez brotados, se trasladaron a una cámara de luz difusa para suberificar las yemas antes de sembrarlos.
+
+*TRATAMINETO DE RIEGO*
+
+a) Riego normal.- El tratamiento en el cual se aplicó el agua de acuerdo a los requerimientos de evapotranspiración de la planta. Las plantas se mantuvieron durante todo el experimento a capacidad de campo. 
+
+b) Sequía controlada.- El tratamiento de sequía regulada consistió en disminuir la cantidad de agua aplicada a la planta de forma gradual hasta llegar a una transpiración normalizada en promedio de 20 %. Momento en donde se realiza la cosecha final del experimento.
 
 
 # RESULTADOS
@@ -36,10 +65,11 @@ Importar base de datos:
 source('https://inkaverse.com/setup.r')
 library(readxl)
 dat <- read_excel("C:/Users/PC/OneDrive/Desktop/dat.xlsx")
-
 str(dat)
-
 ```
+
+
+la tabla de datos se importo mediante el uso del *import dataset* en un formato excel
 
 ## PESO SECO DEL TUBERCULO (g)
 ### Modelo lineal
@@ -50,13 +80,26 @@ modelo <- lm(formula = tubdw ~ bloque + geno + riego +riego*geno , data = dat)
 anova(modelo)
 
 ```
-*Interpretación*:......
+*Interpretación*:
+ Para evaluar la significancia de los efectos de los factores se utilizan valores como: 
+
+- Df (grados de libertad)
+- Sum Sq (suma de cuadrados)
+- Mean Sq (cuadrado medio)
+- F value (valor F) 
+- la probabilidad (Pr(>F)) 
+
+En este caso, los valores de probabilidad (p) son menores a 0.05, lo que indica que los efectos de "bloque", "geno" _con un valor de p extremadamente bajo (0.000000000000022 ***)_ y "riego" _con un valor de p muy pequeño (0.0000000000000000022 ***_, así como sus interacciones, son estadísticamente significativos, lo que indica que la interacción no es estadísticamente significativa en el nivel de significancia del 0.05.
+
+
 
 *Prueba de normalidad*
 ```{r}
 plot(modelo)
 ```
 
+
+Estos gráfico son una herramienta de diagnóstico utilizada para evaluar la calidad del ajuste de un modelo estadístico. Los residuales se distribuyen alrededor de la línea horizontal en 0, donde algunas positivas y negativas, esto es común en los modelos de regresión, ya que es muy poco probable que el modelo ajuste perfectamente a todos los puntos de datos. 
 
 *Interacción de niveles de riego y geno*
 ```{r}
@@ -69,19 +112,33 @@ ggplot(dat, aes(x = geno, y = tubdw, colour = riego)) +
               y = "peso seco del tubérculo")
 ```
 
+Este gráfico de  bigote (boxplot) muestra la interacción entre los niveles de riego (irrigado y sequía) y los genotipos (G01 a G15) en relación con el peso seco del brote (variable de respuesta).
+La línea dentro de la caja indica la mediana, los bordes de la caja muestran el rango entre el primer y tercer cuartil, y los bigotes se extienden hasta los valores máximo y mínimo, excluyendo los puntos atípicos (outliers).Los puntos azules individuales permite ver la variabilidad entre las plantas dentro de cada genotipo bajo condiciones de riego
+
+G01 y G02, presentan valores de peso seco más similares entre los tratamientos de riego y sequía, lo que sugiere que son más tolerantes a la escasez de agua.
+
+
 ### Modelo lineal mixto
-```{r}
+```{r} 
 library(lme4)
 library(lmerTest)
 modelo <- lme4::lmer(formula = tubdw ~ riego + geno +riego*geno + (1 | bloque), data = dat)
 
 anova(modelo)
 ```
+
+El factor "riego", los resultados muestran que este factor tiene un efecto estadísticamente significativo (p-valor < 0.05) sobre la variable de respuesta. Esto indica que los niveles de riego (irrigado y sequía).
+
+El factor "geno", también se observa un efecto estadísticamente significativo (p-valor < 0.05) de los diferentes genotipos sobre la variable de respuesta.
+
+La interacción "riego:geno" también resultó ser estadísticamente significativa (p-valor < 0.05). Esto quiere decir que el efecto del riego sobre la variable de respuesta dependió del genotipo de la planta. 
+
 *eliminacion de valores atipicos*
 ```{r}
 ol <- boxplot(tubdw ~ riego * geno, dat)
 ol
 ```
+ 
 *Valores atipicos: Inti*
 ```{r}
 library(inti)
@@ -91,6 +148,9 @@ model <- remove_outliers(data = dat
                          )
 model
 ```
+
+NOs genera graficos que ofrecen la capacidad de verificar los supuestos datos, como la homogeneidad de la varianza y la normalidad de los residuos, lo que garantiza la validez de los resultados.Los únicos puntos que se resaltan como valores atípicos (outliers) son algunos puntos en el gráfico de homocedasticidad
+
 
 ### comparación de medias
 *library*
@@ -107,6 +167,10 @@ anova(modelo)
  plot(tukey_result)
 
 ```
+
+El gráfico muestra los resultados de un análisis de comparaciones múltiples, probablemente usando el método de Duncan o Tukey, realizado con el paquete agricolae en R. En el eje vertical se representa una medida de respuesta, como el rendimiento, mientras que en el horizontal se listan diferentes tratamientos. Las letras sobre los puntos indican grupos que no son significativamente diferentes entre sí; tratamientos que comparten letras no difieren estadísticamente. Las barras de error reflejan la variabilidad de los datos. Los tratamientos a la izquierda tienen valores más altos de respuesta, y los de la derecha, más bajos, con diferencias estadísticas significativas indicadas por letras diferentes.
+
+
 *Emmeans*
 ```{r}
 library(emmeans)
@@ -127,6 +191,10 @@ cm3 <- emmeans(modelo, ~ riego * geno) %>%
 cm3
 
 ```
+
+Permite realizar comparaciones entre medias ajustadas y obtener estimaciones de medias marginales, lo que facilita la interpretación de los efectos de los factores en un modelo. Con emmeans, es posible realizar análisis post hoc para identificar diferencias significativas entre niveles de un factor, controlando por otras variables en el modelo. Además, proporciona intervalos de confianza y valores p ajustados, lo que ayuda a tomar decisiones informadas en la interpretación de los resultados.
+
+
 *gráfico de barras con los resultados de las medias estimadas*
 ```{r}
 df_cm1 <- as.data.frame(cm1)
@@ -152,6 +220,9 @@ ggplot(df_cm1, aes(x = geno, y = emmean, fill = riego)) +
 
 ```
 
+Se observa que los valores de peso  del tubérculo varían según el genotipo y el tipo de riego. Por ejemplo, el genotipo G01 tiene un peso medio de 25 unidades bajo sequia y 35 unidades en irrigado, mientras que el genotipo G15 muestra un peso  de 43 unidades bajo sequia y 65 unidades en irrigado.
+
+Si las letras sobre las barras en el gráfico son iguales, esto podría indicar que no hay una diferencia significativa entre los grupos que se están comparando en términos del peso seco del tubérculo. Por otro lado, si las letras son diferentes entre las barras, esto sugiere que hay una diferencia significativa en el peso seco del tubérculo entre los grupos representados por esas barras.
 
 ## EFICIENCIA EN EL USO DEL AGUA DE LOS TUBERCULOS (g/l)
 
@@ -251,18 +322,23 @@ ggplot(grupos, aes(x = geno, y = twue, fill = riego)) +
 
 
 ## ANALISIS MULTIVARIADO
+
+Este tipo de análisis es útil para identificar patrones, relaciones y tendencias ocultas en los datos que podrían no ser evidentes en un análisis univariado o bivariado. Con técnicas multivariadas como análisis de componentes principales (PCA), análisis de conglomerados (cluster analysis), análisis discriminante, entre otros, es posible reducir la dimensionalidad de los datos, identificar grupos o categorías naturales, y descubrir la importancia relativa de las variables en la estructura de los datos.
+
 ```{r}
 str(dat)
 ```
 
 ### Correlacion
-
 ```{r}
 library(tidyverse)
 library(psych)
 ```
 
 ## ANALISIS DE COMPONENTES (PCA)
+
+busca encontrar un conjunto de nuevas variables no correlacionadas llamadas componentes principales, que son combinaciones lineales de las variables originales. Estas componentes están ordenadas de forma que la primera componente captura la mayor variabilidad en los datos, seguida de la segunda componente, y así sucesivamente. Esto permite reducir la dimensionalidad de los datos al conservar la mayor parte de la información en unas pocas componentes principales.
+
 ```{r}
 library(FactoMineR)
 mv <- dat %>%
@@ -280,14 +356,14 @@ list(p1, p2) %>%
   plot_grid(plotlist = .,nrow = 1)
 ```
 
+En el gráfico PCA de variables se pueden observar dos componentes principales. Las variables están cerca de la esquina superior izquierda, lo que indica una fuerte correlación entre ellas. Las líneas que conectan los puntos representan la correlación entre las variables. Este gráfico ayuda a visualizar la estructura de correlación del conjunto de datos y a identificar patrones y asociaciones entre las variables.
 
 # DISCUSIÓN
 
 # CONCLUSIONES
+
 # REFERENCIAS BIBLIOGRÁFICAS
-```{r}
-"   Lozano Isla, F. (2015). Eficiencia de uso de agua en membrillo genotipos de papa (Solanum tuberosum L.) bajo condiciones de estrés hídrico por sequía [Tesis de licenciatura, Universidad Nacional Agraria La Molina]. Repositorio Institucional de la Universidad Nacional Agraria La Molina"
-```
+Lozano Isla, F. (2015). Eficiencia de uso de agua en membrillo genotipos de papa (Solanum tuberosum L.) bajo condiciones de estrés hídrico por sequía [Tesis de licenciatura, Universidad Nacional Agraria La Molina]. Repositorio Institucional de la Universidad Nacional Agraria La Molina
 
 
 
