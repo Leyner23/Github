@@ -233,7 +233,16 @@ modelo <- lm(formula = twue ~ bloque + geno + riego +riego*geno , data = dat)
 
 anova(modelo)
 ```
-*Interpretación:*......
+
+Para evaluar la significancia de los efectos de los factores se utilizan valores como: 
+
+Df (grados de libertad) 
+Sum Sq (suma de cuadrados) 
+Mean Sq (cuadrado medio) 
+F value (valor F) 
+La probabilidad (Pr(>F))
+
+En este caso, los valores de probabilidad (p) son menores a 0.05, lo que indica que los efectos de “bloque”, “geno” _con un valor de p extremadamente bajo0.000008721 _ y “riego” _con un valor de p muy pequeño  0.00000000000000022_, así como sus interacciones, son estadísticamente significativos, lo que indica que la interacción no es estadísticamente significativa en el nivel de significancia del 0.05.  
 
 *Prueba de normalidad*
 ```{r}
@@ -251,6 +260,12 @@ ggplot(dat, aes(x = geno, y = twue , colour = riego)) +
        y = "Eficiencia del uso del agua de los tuberculos (g/l)")
 
 ```
+
+Este gráfico de bigote (boxplot) muestra la interacción entre los niveles de riego (irrigado y sequía) y los genotipos (G01 a G15) en relación con el peso seco del brote (variable de respuesta). La línea dentro de la caja indica la mediana, los bordes de la caja muestran el rango entre el primer y tercer cuartil, y los bigotes se extienden hasta los valores máximo y mínimo, excluyendo los puntos atípicos (outliers).Los puntos azules individuales permite ver la variabilidad entre las plantas dentro de cada genotipo bajo condiciones de riego
+
+El gráfico muestra que algunos genotipos tienen una similitud entre los tratamientos de riego y sequía, ya que las cajas de ambos tratamientos se encuentran en la misma posición vertical, lo que indica que la eficiencia del uso del agua de los tubérculos fue similar en ambos tratamientos para este genotipo.
+
+
 ### Modelo lineal mixto
 ```{r}
 library(lme4)
@@ -260,6 +275,13 @@ model <- lme4::lmer(formula = twue ~ riego * geno + (1|bloque), data = dat)
 
 anova(modelo)
 ```
+
+El factor “riego”, los resultados muestran que este factor tiene un efecto estadísticamente significativo (p-valor < 0.05) sobre la variable de respuesta. Esto indica que los niveles de riego (irrigado y sequía).
+El factor “geno”, también se observa un efecto estadísticamente significativo (p-valor < 0.05) de los diferentes genotipos sobre la variable de respuesta.
+La interacción “riego:geno” también resultó ser estadísticamente significativa (p-valor < 0.05). Esto quiere decir que el efecto del riego sobre la variable de respuesta depende del genotipo de la planta.
+Parte final de raw data:
+En la muestra de una serie de diagramas, se puede representar la distribución de la variable "twue" para diferentes genotipos bajo condiciones de riego, incluyendo los valores atípicos que se puedan representar.
+
 
 *Prueba de normalidad*
 ```{r}
@@ -293,6 +315,9 @@ print(tukey_interaccion)
 plot(tukey_interaccion)
 
 ```
+
+El gráfico muestra los resultados de una prueba de comparación de medias. Se comparan las medias de diferentes grupos, y se muestra si las medias son significativamente diferentes entre sí. Las letras que aparecen encima de cada grupo indican qué grupos son significativamente diferentes entre sí. Por ejemplo, los grupos que comparten la letra "a" no son significativamente diferentes entre sí.
+
 
 ```{r}
 str(tukey_interaccion)
@@ -358,9 +383,12 @@ list(p1, p2) %>%
 
 En el gráfico PCA de variables se pueden observar dos componentes principales. Las variables están cerca de la esquina superior izquierda, lo que indica una fuerte correlación entre ellas. Las líneas que conectan los puntos representan la correlación entre las variables. Este gráfico ayuda a visualizar la estructura de correlación del conjunto de datos y a identificar patrones y asociaciones entre las variables.
 
-# DISCUSIÓN
 
 # CONCLUSIONES
+
+Se considera que el R, es una herramienta fundamental para el procesamiento de datos y así mismo para su análisis, referente al ANOVA, es un importante método estadístico para poder determinar los efectos en las variables y examinar si existen diferencias entre las medias, usando la prueba de Tukey para ver si existen diferencias significativas.
+En este estudio se han evaluado dos variables; el peso seco del tubérculo y eficiencia en el uso de los tubérculos, determinando que en la primera variable resaltaron los genotipo G01 Y G02, presentan una mayor tolerancia a la falta de agua, ya que el peso seco de sus tubérculos no varía significativamente entre los tratamientos de riego e irrigación. Esto indica que estos genotipos mantienen su rendimiento relativamente estable incluso cuando el agua es limitada, lo cual es ventajoso para su cultivo en zonas donde la disponibilidad hídrica es baja.
+Por otro lado, en cuanto a la eficiencia en el uso del agua, el genotipo G08 se destacó al mostrar una similitud en la respuesta entre ambos tratamientos de riego. La posición de las cajas en el análisis de este genotipo indicó que el rendimiento de sus tubérculos fue similar en condiciones de riego y sequía, lo que sugiere una eficiencia hídrica constante.
 
 # REFERENCIAS BIBLIOGRÁFICAS
 Lozano Isla, F. (2015). Eficiencia de uso de agua en membrillo genotipos de papa (Solanum tuberosum L.) bajo condiciones de estrés hídrico por sequía [Tesis de licenciatura, Universidad Nacional Agraria La Molina]. Repositorio Institucional de la Universidad Nacional Agraria La Molina
