@@ -89,8 +89,7 @@ anova(modelo)
 - F value (valor F) 
 - la probabilidad (Pr(>F)) 
 
-En este caso, los valores de probabilidad (p) son menores a 0.05, lo que indica que los efectos de "bloque", "geno" _con un valor de p extremadamente bajo (0.000000000000022 ***)_ y "riego" _con un valor de p muy pequeño (0.0000000000000000022 ***_, así como sus interacciones, son estadísticamente significativos, lo que indica que la interacción no es estadísticamente significativa en el nivel de significancia del 0.05.
-
+En este caso, los valores de probabilidad (p) son menores a 0.05, lo que indica que los efectos de "bloque", "geno" _con un valor de p extremadamente bajo (0.000000000000022 ***)_ y "riego" _con un valor de p muy pequeño (0.0000000000000000022 ***,  lo que indica que las diferencias entre los grupos definidos son altamente significativas en relación con la variable así como sus interacciones, se observa que el valor de p es 0.0583468, lo que sugiere que esta interacción es significativa pero con un nivel de significancia ligeramente mayor., lo que indica que la interacción no es estadísticamente significativa en el nivel de significancia del 0.05.
 
 
 *Prueba de normalidad*
@@ -98,6 +97,7 @@ En este caso, los valores de probabilidad (p) son menores a 0.05, lo que indica 
 plot(modelo)
 ```
 
+La prueba de normalidad en RStudio, en el contexto de un ANOVA, sirve para verificar si las distribuciones de los datos de las variables analizadas siguen una distribución normal. 
 
 Estos gráfico son una herramienta de diagnóstico utilizada para evaluar la calidad del ajuste de un modelo estadístico. Los residuales se distribuyen alrededor de la línea horizontal en 0, donde algunas positivas y negativas, esto es común en los modelos de regresión, ya que es muy poco probable que el modelo ajuste perfectamente a todos los puntos de datos. 
 
@@ -112,11 +112,9 @@ ggplot(dat, aes(x = geno, y = tubdw, colour = riego)) +
               y = "peso seco del tubérculo")
 ```
 
-Este gráfico de  bigote (boxplot) muestra la interacción entre los niveles de riego (irrigado y sequía) y los genotipos (G01 a G15) en relación con el peso seco del brote (variable de respuesta).
-La línea dentro de la caja indica la mediana, los bordes de la caja muestran el rango entre el primer y tercer cuartil, y los bigotes se extienden hasta los valores máximo y mínimo, excluyendo los puntos atípicos (outliers).Los puntos azules individuales permite ver la variabilidad entre las plantas dentro de cada genotipo bajo condiciones de riego
+En el gráfico, se puede apreciar la distribución de los datos mediante un diagrama de caja (boxplot), que muestra la mediana, los cuartiles y los valores atípicos. Este tipo de gráfico es útil para visualizar la variabilidad y la dispersión de los datos, así como para identificar posibles diferencias entre los genotipos y las condiciones de riego en términos de peso de los tubérculos.
 
-G01 y G02, presentan valores de peso seco más similares entre los tratamientos de riego y sequía, lo que sugiere que son más tolerantes a la escasez de agua.
-
+Al observar el genotipo G03 bajo la condición de sequia, se puede apreciar que la mediana del peso del tubérculo se encuentra en un valor relativamente bajo. Además, se observa que la dispersión de los datos para el genotipo G03 en condiciones de irrigado es amplia, lo que sugiere una variabilidad significativa en los pesos de los tubérculos para este genotipo en particular.
 
 ### Modelo lineal mixto
 ```{r} 
@@ -127,11 +125,9 @@ modelo <- lme4::lmer(formula = tubdw ~ riego + geno +riego*geno + (1 | bloque), 
 anova(modelo)
 ```
 
-El factor "riego", los resultados muestran que este factor tiene un efecto estadísticamente significativo (p-valor < 0.05) sobre la variable de respuesta. Esto indica que los niveles de riego (irrigado y sequía).
+En el contexto del ANOVA realizado, se ha determinado que existe una diferencia significativa entre los niveles de "bloque" y "geno" en relación con la variable de interés "tubdw". Esto sugiere que tanto el factor "bloque" como el factor "geno" tienen un efecto significativo en la variabilidad de los valores de peso seco del tubérculo.
 
-El factor "geno", también se observa un efecto estadísticamente significativo (p-valor < 0.05) de los diferentes genotipos sobre la variable de respuesta.
-
-La interacción "riego:geno" también resultó ser estadísticamente significativa (p-valor < 0.05). Esto quiere decir que el efecto del riego sobre la variable de respuesta dependió del genotipo de la planta. 
+Al identificar diferencias significativas en las medias de los valores de "tubdw" para los diferentes niveles de los factores analizados, se puede concluir que tanto el factor "bloque" como el factor "geno" influyen de manera importante en la variable de respuesta.
 
 *eliminacion de valores atipicos*
 ```{r}
