@@ -21,19 +21,405 @@ editor_options:
 ---
 
 # INTRODUCCIÓN
+La anotación de imágenes es un proceso fundamental en el desarrollo de modelos de inteligencia artificial (IA) para aplicaciones de visión por computadora. Este proceso consiste en etiquetar o marcar elementos específicos dentro de una imagen para que los algoritmos de aprendizaje automático puedan aprender a reconocer y procesar estas características. La precisión y calidad de la anotación de imágenes son cruciales, ya que los modelos de IA dependen de datos anotados para entrenarse y mejorar su rendimiento.
+
+Existen varias técnicas de anotación de imágenes, cada una adecuada para diferentes tipos de tareas. Entre las más comunes se encuentran la anotación de objetos, donde se dibujan cuadros delimitadores alrededor de los objetos de interés; la segmentación semántica, que implica etiquetar cada píxel de la imagen con una clase específica; y la anotación de puntos clave.
+
+El proceso de anotación puede ser realizado manualmente por anotadores humanos o automatizado mediante el uso de herramientas y algoritmos específicos. Aunque la anotación manual es más precisa, también es más costosa y consume mucho tiempo. Por otro lado, las técnicas automatizadas pueden acelerar el proceso, pero a menudo requieren ajustes y validaciones adicionales para garantizar la precisión.
+
+La calidad de la anotación de imágenes es crucial porque los modelos de IA dependen de datos bien etiquetados para entrenarse correctamente. Un conjunto de datos mal anotado puede llevar a un modelo inexacto. Por lo tanto, la precisión y la consistencia en la anotación son esenciales para desarrollar aplicaciones de IA robustas y fiables.
+
 # OBJETIVOS
+## Objetivo General
+- Desarrollar un sistema basado en inteligencia artificial que permita el reconocimiento y clasificación de hojas de Citrus sinensis (Naranja Huando), utilizando patrones de área de hoja y moneda “Nuevo sol”, para mejorar la gestión agrícola y la detección de este cultivo.
+
+## Objetivos Específicos
+- Implementar técnicas de visión artificial para la captura y análisis de imágenes de hojas de naranja, enfocándose en la extracción de características como color, forma y área, mediante programas como Anaconda y Label Studio que son fundamentales para el reconocimiento efectivo.
+
+- Desarrollar un modelo de aprendizaje automático que clasifique las hojas según la especie de planta utilizando algoritmos.
+
+- Crear una base de datos mínima que contenga imágenes etiquetadas de hojas de naranja en diferentes condiciones, lo que permitirá entrenar el modelo con datos representativos y mejorar su capacidad de generalización.
+
+- Evaluar el impacto del sistema en la práctica agrícola, analizando cómo la implementación del reconocimiento automatizado influye en la eficiencia del monitoreo y manejo de cultivos.
+
+
 # MATERIALES Y MÉTODOS
+
+**MATERIALES**
+
+**Equipos y Herramientas**:
+
+- Cámara digital o dispositivo móvil con buena calidad de imagen para capturar fotografías de hojas de _Citrus x sinensis_ y monedas "Nuevo sol".
+
+- Computadora con capacidad para ejecutar entornos de desarrollo y procesamiento de datos.
+
+- Monedas "Nuevo sol" como referencia para normalizar la escala de las imágenes capturadas.
+
+**Software:**
+
+- _Anaconda:_ Entorno de desarrollo para gestionar herramientas de análisis de datos y aprendizaje automático, como Python y bibliotecas asociadas.
+
+- _Label Studio:_ Herramienta de etiquetado de datos para anotar las imágenes capturadas con características específicas.
+
+- _Rstudio:_ Entorno de desarrollo integrado para el análisis estadístico y visualización de datos, utilizado para evaluar métricas del modelo y analizar el impacto en la gestión agrícola.
+
+**Datos:**
+
+- Base de datos de imágenes de hojas de _Citrus x sinensis_ y monedas "Nuevo sol" capturadas en diferentes condiciones.
+
+- Información descriptiva de las figuras como muestra 
+
+**MÉTODOS**
+
+**Captura de Imágenes:**
+
+- Se utilizó una cámara profesional para tomar un total de 60 fotografías de hojas de Citrus sinensis (naranja huando) junto con una moneda "Nuevo sol" como referencia de escala. Las imágenes fueron tomadas en condiciones controladas para asegurar consistencia en iluminación y tamaño.
+
+**Selección de Muestra:**
+
+- De las 60 imágenes capturadas, se seleccionaron 10 imágenes como muestra representativa para el análisis y entrenamiento del modelo. 
+
+- Las demás 50 imágenes fueron guardadas en una carpeta en Google Drive para almacenamiento y uso futuro.
+
+**Organización y procesamiento de Imágenes:**
+
+- Las 60 imágenes, incluidas las 10 seleccionadas, fueron cargadas en Anaconda, donde se organizó el entorno de desarrollo para el procesamiento de las imágenes.
+
+- se configuró un flujo de trabajo en Anaconda para la automatización del procesamiento y clasificación de nuevas imágenes de hojas de _Citrus x sinensis_ y el "nuevo sol".
+
+**Link del drive de  todas las imagenes**
+
+https://drive.google.com/drive/folders/1Hp79nb1jFxcOyK01imzTNHWcbUbyTRho?usp=sharing 
+
+## Muestra de imagenes
+
+```{r}
+library(jpeg)
+library(grid)
+
+imagen1_path <- "C:/Users/PC/OneDrive/Desktop/UNTRM/Grupo-b-2-Naranja/images/394c4f99-DSC_2318.JPG"
+imagen2_path <- "C:/Users/PC/OneDrive/Desktop/UNTRM/Grupo-b-2-Naranja/images/237b3264-DSC_2288.JPG"
+
+imagen1 <- readJPEG(imagen1_path)
+imagen2 <- readJPEG(imagen2_path)
+
+grid.newpage()
+pushViewport(viewport(layout = grid.layout(1, 2)))
+
+print_image <- function(image, row, col) {
+  pushViewport(viewport(layout.pos.row = row, layout.pos.col = col))
+  grid.raster(image)
+  popViewport()
+}
+
+print_image(imagen1, 1, 1)
+print_image(imagen2, 1, 2)
+```
+**Figura 1**: *Muestras de hojas de _Citrus x sinensis_ y moneda "Nuevo sol"*
+
+```{r}
+library(jpeg)
+library(grid)
+
+imagen1_path <- "C:/Users/PC/OneDrive/Desktop/UNTRM/Grupo-b-2-Naranja/images/a9f86178-DSC_2307.JPG"
+imagen2_path <- "C:/Users/PC/OneDrive/Desktop/UNTRM/Grupo-b-2-Naranja/images/db012f85-DSC_2334.JPG"
+
+imagen1 <- readJPEG(imagen1_path)
+imagen2 <- readJPEG(imagen2_path)
+
+grid.newpage()
+pushViewport(viewport(layout = grid.layout(1, 2)))
+
+print_image <- function(image, row, col) {
+  pushViewport(viewport(layout.pos.row = row, layout.pos.col = col))
+  grid.raster(image)
+  popViewport()
+}
+
+print_image(imagen1, 1, 1)
+print_image(imagen2, 1, 2)
+```
+**Figura 2**: *Muestras de hojas de _Citrus x sinensis_ y moneda "Nuevo sol"*
+```{r}
+library(jpeg)
+library(grid)
+
+imagen1_path <- "C:/Users/PC/OneDrive/Desktop/UNTRM/Grupo-b-2-Naranja/images/ed8e707f-DSC_2275.JPG"
+imagen2_path <- "C:/Users/PC/OneDrive/Desktop/UNTRM/Grupo-b-2-Naranja/images/ddb54a9c-DSC_2271.JPG"
+
+imagen1 <- readJPEG(imagen1_path)
+imagen2 <- readJPEG(imagen2_path)
+
+grid.newpage()
+pushViewport(viewport(layout = grid.layout(1, 2)))
+
+print_image <- function(image, row, col) {
+  pushViewport(viewport(layout.pos.row = row, layout.pos.col = col))
+  grid.raster(image)
+  popViewport()
+}
+
+print_image(imagen1, 1, 1)
+print_image(imagen2, 1, 2)
+```
+**Figura 3**: *Muestras de hojas de _Citrus x sinensis_ y moneda "Nuevo sol"*
+```{r}
+library(jpeg)
+library(grid)
+
+imagen1_path <- "C:/Users/PC/OneDrive/Desktop/UNTRM/Grupo-b-2-Naranja/images/6a5426bc-DSC_2277.JPG"
+imagen2_path <- "C:/Users/PC/OneDrive/Desktop/UNTRM/Grupo-b-2-Naranja/images/8d6dcb9a-DSC_2281.JPG"
+
+imagen1 <- readJPEG(imagen1_path)
+imagen2 <- readJPEG(imagen2_path)
+
+grid.newpage()
+pushViewport(viewport(layout = grid.layout(1, 2)))
+
+print_image <- function(image, row, col) {
+  pushViewport(viewport(layout.pos.row = row, layout.pos.col = col))
+  grid.raster(image)
+  popViewport()
+}
+
+print_image(imagen1, 1, 1)
+print_image(imagen2, 1, 2)
+```
+**Figura 4**: *Muestras de hojas de _Citrus x sinensis_ y moneda "Nuevo sol"*
+```{r}
+library(jpeg)
+library(grid)
+
+imagen1_path <- "C:/Users/PC/OneDrive/Desktop/UNTRM/Grupo-b-2-Naranja/images/fc09cf6f-DSC_2319.JPG"
+imagen2_path <- "C:/Users/PC/OneDrive/Desktop/UNTRM/Grupo-b-2-Naranja/images/fb59bb83-DSC_2329.JPG"
+
+imagen1 <- readJPEG(imagen1_path)
+imagen2 <- readJPEG(imagen2_path)
+
+grid.newpage()
+pushViewport(viewport(layout = grid.layout(1, 2)))
+
+print_image <- function(image, row, col) {
+  pushViewport(viewport(layout.pos.row = row, layout.pos.col = col))
+  grid.raster(image)
+  popViewport()
+}
+
+print_image(imagen1, 1, 1)
+print_image(imagen2, 1, 2)
+```
+**Figura 5**: *Muestras de hojas de _Citrus x sinensis_ y moneda "Nuevo sol"*
+
 # MARCO TEORICO
-## Aplicacion 1
-## Aplicacion 2
+
+## MINICONDA 
+
+Miniconda es un instalador mínimo para Conda, diseñado para proporcionar la funcionalidad básica de Conda sin los paquetes y herramientas adicionales incluidos en la distribución completa de Anaconda. 
+Permite a los usuarios instalar sólo los paquetes necesarios, lo que da como resultado un entorno más sencillo y personalizado. Al igual que Anaconda, Miniconda ofrece una potente gestión de paquetes y entornos, pero se centra en la sencillez y la eficacia.
+
+**Características**
+
+- _Ligero y mínimo:_ Miniconda incluye sólo los componentes esenciales de Conda, dando a los usuarios un control total sobre qué paquetes adicionales instalar.
+
+- _Personalizable:_ Los usuarios pueden construir sus entornos desde cero, instalando sólo las herramientas y bibliotecas necesarias para sus proyectos.
+
+- _Soporte completo de Conda:_ Aunque Miniconda es un instalador mínimo, conserva todas las potentes funciones de gestión de paquetes y entornos de Conda, lo que garantiza la compatibilidad con los entornos Conda.
+
+- _Plataforma cruzada:_ Al igual que Conda, Miniconda está disponible en Windows, macOS y Linux.
+
+
+## PIPENV
+Es una herramienta que combina la funcionalidad de Pip y Virtualenv para gestionar las dependencias de Python y los entornos virtuales. Utiliza un Pipfile para especificar las dependencias del proyecto y se encarga automáticamente de la creación y gestión del entorno.
+
+Aquí tienes un ejemplo de Pipefile: 
+
+Source: https://pipenv.pypa.io/en/latest/pipfile.html
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+[packages]
+Django = "==4.*"
+waitress = {version = "*", markers="sys_platform == 'win32'"}
+gunicorn = {version = "*", markers="sys_platform == 'linux'"}
+[dev-packages]
+pytest-cov = "==3.*"
+
+**Características**:
+
+- _Gestión de dependencias con Pipfile_: Pipenv utiliza un Pipfile para declarar las dependencias del proyecto, sustituyendo al archivo tradicional requirements.txt.
+
+- Gestión automática del entorno virtual: Crea y gestiona automáticamente entornos aislados para tus proyectos, simplificando el proceso de mantener separadas las dependencias.
+
+- _Construcciones deterministas_: La página Pipfile.lock garantiza que todas las dependencias y sus versiones están bloqueadas, proporcionando entornos reproducibles en distintos sistemas.
+
+- _Controles de seguridad_: Pipenv realiza comprobaciones de seguridad en las dependencias para asegurarse de que no utilizas paquetes con vulnerabilidades conocidas.
+
+
 # RESULTADOS
-## subir imagenes (interpretar y Señalar como se usaria con las aplicaciones)
+
+## SUBIR IMAGENES AL "ANACONDA"
+En Anaconda, para trabajar con imágenes como esta, debes seguir un flujo organizado que incluye la preparación, carga y análisis de las imágenes en un entorno de desarrollo Python. Aquí están los pasos generales:
+
+**Preparación**: Colocar las imágenes en tu directorio de trabajo
+- Guarda la imagen en la misma carpeta donde se encuentra tu archivo de proyecto de Python o Jupyter Notebook.
+
+- Si la imagen está en una ubicación diferente, asegúrate de conocer su ruta completa (por ejemplo, C:/MiCarpeta/imagen.jpg).
+
+**Herramientas para cargar imágenes**
+
+Para cargar las imágenes, puedes usar herramientas como:
+
+- Jupyter Notebook: Ideal para proyectos interactivos y experimentación.
+- Spyder: Adecuado para scripts en Python más estructurados.
+- Anaconda Navigator: Si usas aplicaciones como Streamlit o Dash, puedes construir interfaces para cargar imágenes.
+
+**Métodos para subir imágenes**
+
+Dependiendo de cómo trabajes en Anaconda, la forma de "subir" o cargar imágenes al programa varía:
+
+**a.** Usar Jupyter Notebook
+Asegúrate de que la imagen esté en el mismo directorio donde se encuentra tu archivo .ipynb.
+Dentro del notebook, puedes cargar y visualizar la imagen para trabajar con segmentación u otros análisis.
+
+**b.** Usar Spyder
+Configura el directorio de trabajo en Spyder para que apunte a la carpeta donde se encuentra la imagen.
+Esto garantiza que el programa pueda acceder a la imagen sin necesidad de especificar rutas absolutas.
+
+**c.** Usar interfaces interactivas
+Herramientas como Streamlit o Dash permiten desarrollar aplicaciones en las que los usuarios pueden cargar imágenes directamente desde sus computadoras para su análisis.
+
+## Interpretación 
+Hoja Naranja (Izquierda):
+
+- La segmentación de la hoja _(Citrus x sinenesi)_ utiliza un color naranja uniforme, lo que podría representar una hoja completamente sana o una región bien identificada que no presenta daños visibles.Algunas hojas muestran una irregularidad visible en los borde, posiblemente causadas por daños, plagas o enfermedades. Tambien puede ser por la mala segmentación que se realizo.
+
+- El círculo más pequeño "Nuevo sol" al lado de la hoja también está segmentado en un color naranja, posiblemente indicando que es una referencia para calibrar tamaños o colore, ya que una moneda en especifico presenta un solo tamaño a compración de las hojas. 
+
+
+```{r}
+library(jpeg)
+library(grid)
+
+imagen1_path <- "C:/Users/PC/OneDrive/Desktop/UNTRM/Grupo-b-2-Naranja/resultado/Imagen de WhatsApp 2024-12-12 a las 14.23.33_29633722.jpg"
+imagen2_path <- "C:/Users/PC/OneDrive/Desktop/UNTRM/Grupo-b-2-Naranja/resultado/Imagen de WhatsApp 2024-12-12 a las 14.24.05_88c02a3c.jpg"
+imagen1 <- readJPEG(imagen1_path)
+imagen2 <- readJPEG(imagen2_path)
+
+grid.newpage()
+pushViewport(viewport(layout = grid.layout(1, 2)))
+
+print_image <- function(image, row, col) {
+  pushViewport(viewport(layout.pos.row = row, layout.pos.col = col))
+  grid.raster(image)
+  popViewport()
+}
+
+print_image(imagen1, 1, 1)
+print_image(imagen2, 1, 2)
+```
+**Figura 6**: *Muestras procesadas por Anaconda de hojas de _Citrus x sinensis_ y moneda "Nuevo sol"*
+
+```{r}
+library(jpeg)
+library(grid)
+
+imagen1_path <- "C:/Users/PC/OneDrive/Desktop/UNTRM/Grupo-b-2-Naranja/resultado/Imagen de WhatsApp 2024-12-12 a las 14.24.23_5dbb4349.jpg"
+imagen2_path <- "C:/Users/PC/OneDrive/Desktop/UNTRM/Grupo-b-2-Naranja/resultado/Imagen de WhatsApp 2024-12-12 a las 14.24.50_3fa58a3a.jpg"
+imagen1 <- readJPEG(imagen1_path)
+imagen2 <- readJPEG(imagen2_path)
+
+grid.newpage()
+pushViewport(viewport(layout = grid.layout(1, 2)))
+
+print_image <- function(image, row, col) {
+  pushViewport(viewport(layout.pos.row = row, layout.pos.col = col))
+  grid.raster(image)
+  popViewport()
+}
+
+print_image(imagen1, 1, 1)
+print_image(imagen2, 1, 2)
+```
+**Figura 7**: *Muestras procesadas por Anaconda de hojas de _Citrus x sinensis_ y moneda "Nuevo sol"*
+
+```{r}
+library(jpeg)
+library(grid)
+
+imagen1_path <- "C:/Users/PC/OneDrive/Desktop/UNTRM/Grupo-b-2-Naranja/resultado/Imagen de WhatsApp 2024-12-12 a las 14.25.22_aab0b37a.jpg"
+imagen2_path <- "C:/Users/PC/OneDrive/Desktop/UNTRM/Grupo-b-2-Naranja/resultado/Imagen de WhatsApp 2024-12-12 a las 14.25.53_9fca02ad.jpg"
+imagen1 <- readJPEG(imagen1_path)
+imagen2 <- readJPEG(imagen2_path)
+
+grid.newpage()
+pushViewport(viewport(layout = grid.layout(1, 2)))
+
+print_image <- function(image, row, col) {
+  pushViewport(viewport(layout.pos.row = row, layout.pos.col = col))
+  grid.raster(image)
+  popViewport()
+}
+
+print_image(imagen1, 1, 1)
+print_image(imagen2, 1, 2)
+```
+**Figura 8**: *Muestras procesadas por Anaconda de hojas de _Citrus x sinensis_ y moneda "Nuevo sol"*
+
+```{r}
+library(jpeg)
+library(grid)
+
+imagen1_path <- "C:/Users/PC/OneDrive/Desktop/UNTRM/Grupo-b-2-Naranja/resultado/Imagen de WhatsApp 2024-12-12 a las 14.26.12_5263ad7a.jpg"
+imagen2_path <- "C:/Users/PC/OneDrive/Desktop/UNTRM/Grupo-b-2-Naranja/resultado/Imagen de WhatsApp 2024-12-12 a las 14.26.33_23d10489.jpg"
+imagen1 <- readJPEG(imagen1_path)
+imagen2 <- readJPEG(imagen2_path)
+
+grid.newpage()
+pushViewport(viewport(layout = grid.layout(1, 2)))
+
+print_image <- function(image, row, col) {
+  pushViewport(viewport(layout.pos.row = row, layout.pos.col = col))
+  grid.raster(image)
+  popViewport()
+}
+
+print_image(imagen1, 1, 1)
+print_image(imagen2, 1, 2)
+```
+**Figura 9**: *Muestras procesadas por Anaconda de hojas de _Citrus x sinensis_ y moneda "Nuevo sol"*
+
+```{r}
+library(jpeg)
+library(grid)
+
+imagen1_path <- "C:/Users/PC/OneDrive/Desktop/UNTRM/Grupo-b-2-Naranja/resultado/Imagen de WhatsApp 2024-12-12 a las 14.27.05_fbaacfb0.jpg"
+imagen2_path <- "C:/Users/PC/OneDrive/Desktop/UNTRM/Grupo-b-2-Naranja/resultado/Imagen de WhatsApp 2024-12-12 a las 14.27.22_b19db042.jpg"
+imagen1 <- readJPEG(imagen1_path)
+imagen2 <- readJPEG(imagen2_path)
+
+grid.newpage()
+pushViewport(viewport(layout = grid.layout(1, 2)))
+
+print_image <- function(image, row, col) {
+  pushViewport(viewport(layout.pos.row = row, layout.pos.col = col))
+  grid.raster(image)
+  popViewport()
+}
+
+print_image(imagen1, 1, 1)
+print_image(imagen2, 1, 2)
+```
+**Figura 10**: *Muestras procesadas por Anaconda de hojas de _Citrus x sinensis_ y moneda "Nuevo sol"*
+
+
 # CONCLUSIONES
+En el desarrollo en Python, existen diversas herramientas que ofrecen alternativas a Anaconda, cada una con características específicas diseñadas para responder a distintas necesidades. Soluciones como Miniconda, Pipenv, Poetry, Virtualenv, Pyenv, Miniforge, Mamba, Conda independiente y Docker destacan por su capacidad para gestionar entornos y dependencias de forma eficiente, permitiendo a los desarrolladores personalizar sus proyectos según requisitos de velocidad, aislamiento, compatibilidad multiplataforma o reproducibilidad.
+
+Además, estas herramientas no solo optimizan el flujo de trabajo en proyectos de aprendizaje automático y desarrollo de software, sino que también son clave en áreas especializadas como la agricultura digital. Dentro de este contexto, la anotación de imágenes juega un papel crucial en el desarrollo de modelos de inteligencia artificial para aplicaciones de visión por computadora. Herramientas como Label Studio simplifican este proceso, permitiendo realizar anotaciones precisas y consistentes mediante técnicas como la segmentación semántica y la anotación de objetos (hojas, monedas). Este paso es fundamental, ya que la calidad de los datos anotados influye directamente en el rendimiento y precisión de los modelos entrenados.
+
 # REFERENCIAS BIBLIOGRÁFICAS
+Anaconda, Inc. (2024). "Conda: Package and environment management." https://docs.conda.io/en/latest/ 
 
-
-
-
-
-
+"Miniconda: The minimal conda installer." (2020). Anaconda Documentation. https://docs.conda.io/en/latest/miniconda.html
 
