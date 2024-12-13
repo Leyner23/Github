@@ -1,5 +1,5 @@
 ---
-title: "Pagina Web_modelos_A"
+title: "ETIQUETADO DE IMAGENES DE Citrus x sinensis"
 author: "Jamil Delgado, Leyner Tucto, Mariela Comeca, Emerson Santos, Carmen Tarrillo, Flor Chavez, Elda Perez"
 format:
   html:
@@ -31,7 +31,7 @@ La calidad de la anotación de imágenes es crucial porque los modelos de IA dep
 
 # OBJETIVOS
 ## Objetivo General
-- Desarrollar un sistema basado en inteligencia artificial que permita el reconocimiento y clasificación de hojas de Citrus sinensis (Naranja Huando), utilizando patrones de área de hoja y moneda “Nuevo sol”, para mejorar la gestión agrícola y la detección de este cultivo.
+- Desarrollar un sistema basado en inteligencia artificial que permita el reconocimiento y clasificación de hojas de _Citrus x sinensis_ (Naranja Huando), utilizando patrones de área de hoja y moneda “Nuevo sol”, para mejorar la gestión agrícola y la detección de este cultivo.
 
 ## Objetivos Específicos
 - Implementar técnicas de visión artificial para la captura y análisis de imágenes de hojas de naranja, enfocándose en la extracción de características como color, forma y área, mediante programas como Anaconda y Label Studio que son fundamentales para el reconocimiento efectivo.
@@ -77,19 +77,20 @@ La calidad de la anotación de imágenes es crucial porque los modelos de IA dep
 
 **Selección de Muestra:**
 
-- De las 60 imágenes capturadas, se seleccionaron 10 imágenes como muestra representativa para el análisis y entrenamiento del modelo. 
+- De las 60 imágenes capturadas, se seleccionaron 50 imágenes como muestra representativa para el análisis y entrenamiento del modelo. 
 
-- Las demás 50 imágenes fueron guardadas en una carpeta en Google Drive para almacenamiento y uso futuro.
+- Las demás imágenes fueron guardadas en una carpeta en Google Drive para almacenamiento y uso futuro.
 
 **Organización y procesamiento de Imágenes:**
 
-- Las 60 imágenes, incluidas las 10 seleccionadas, fueron cargadas en Anaconda, donde se organizó el entorno de desarrollo para el procesamiento de las imágenes.
+- DE las 60 imágenes, se seleccionarón 10 imagenes representativas para la elaboración de la pagina web, fueron cargadas en Anaconda, donde se organizó el entorno de desarrollo para el procesamiento de las imágenes.
 
 - se configuró un flujo de trabajo en Anaconda para la automatización del procesamiento y clasificación de nuevas imágenes de hojas de _Citrus x sinensis_ y el "nuevo sol".
 
 **Link del drive de  todas las imagenes**
 
-https://drive.google.com/drive/folders/1Hp79nb1jFxcOyK01imzTNHWcbUbyTRho?usp=sharing 
+https://drive.google.com/drive/folders/1Hp79nb1jFxcOyK01imzTNHWcbUbyTRho?usp=sharing
+
 
 ## Muestra de imagenes
 
@@ -215,7 +216,7 @@ print_image(imagen2, 1, 2)
 ## MINICONDA 
 
 Miniconda es un instalador mínimo para Conda, diseñado para proporcionar la funcionalidad básica de Conda sin los paquetes y herramientas adicionales incluidos en la distribución completa de Anaconda. 
-Permite a los usuarios instalar sólo los paquetes necesarios, lo que da como resultado un entorno más sencillo y personalizado. Al igual que Anaconda, Miniconda ofrece una potente gestión de paquetes y entornos, pero se centra en la sencillez y la eficacia.
+Permite a los usuarios instalar sólo los paquetes necesarios, lo que da como resultado un entorno más sencillo y personalizado. Al igual que Anaconda, Miniconda ofrece una potente gestión de paquetes y entornos, pero se centra en la sencillez y la eficacia (Anaconda, 2024). 
 
 **Características**
 
@@ -229,7 +230,7 @@ Permite a los usuarios instalar sólo los paquetes necesarios, lo que da como re
 
 
 ## PIPENV
-Es una herramienta que combina la funcionalidad de Pip y Virtualenv para gestionar las dependencias de Python y los entornos virtuales. Utiliza un Pipfile para especificar las dependencias del proyecto y se encarga automáticamente de la creación y gestión del entorno.
+Es una herramienta que combina la funcionalidad de Pip y Virtualenv para gestionar las dependencias de Python y los entornos virtuales. Utiliza un Pipfile para especificar las dependencias del proyecto y se encarga automáticamente de la creación y gestión del entorno (pyenv, 2023).
 
 Aquí tienes un ejemplo de Pipefile: 
 
